@@ -26,17 +26,20 @@ if command -v "gpg" > /dev/null
 then
 	echo "Using gpg"
 	gpg -c "$ofile"
+	#use gpg -d to decrypt
 	mv "$ofile.gpg" $ofile
 elif command -v "openssl" > /dev/null
 then
 	echo "Using openssl, enter password:"
 	openssl enc -in $ofile -out $ofile.dat -e -aes256 -pass stdin
+	#use same command with "-d" instead of "-e" to decrypt
 	mv "$ofile.dat" $ofile
 elif command -v "base64" > /dev/null
 then
 	echo "Can't find gpg or openssl, I guess base64 is better than nothing"
 	base64 $ofile > "$ofile.b64"
+	#it's base64 if you can't decode it then gtfo
 	mv "$ofile.b64" $ofile
 else
-	echo "Can't encrypt or encode, output file is plaintext"
+	echo "Can't encrypt or encode; Output file is plaintext"
 fi
