@@ -21,17 +21,17 @@ done
 
 echo "Output file is $ofile"
 
-if ! type "gpg" > /dev/null
+if command -v "gpg" > /dev/null
 then
 	echo "Using gpg"
 	gpg -c "$ofile"
 	mv "$ofile.gpg" $ofile
-elif ! type "openssl" > /dev/null
+elif command -v "openssl" > /dev/null
 then
 	echo "Using openssl, enter password:"
 	openssl enc -in $ofile -out $ofile.dat -e -aes256 -pass stdin
 	mv "$ofile.dat" $ofile
-elif ! type "base64" > /dev/null
+elif command -v "base64" > /dev/null
 then
 	echo "Can't find gpg or openssl, I guess base64 is better than nothing"
 	base64 $ofile > "$ofile.b64"
