@@ -13,12 +13,13 @@ do
 	echo -n "Scanning $i"
 	for p in $(cat $portfile)
 	do
-		nc -v -n -z -w 1 $i $p >>$ofile 2>&1
+		nc -v -n -z -w 1 $i $p 2>>$ofile
 		echo -n "."
 	done
 	echo
 done
-
+grep "open" $ofile > "$ofile.tmp"
+mv "$ofile.tmp" $ofile
 echo "Output file is $ofile"
 
 if command -v "gpg" > /dev/null
