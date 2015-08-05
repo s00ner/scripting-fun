@@ -13,7 +13,7 @@ do
 	echo -n "Scanning $i"
 	for p in $(cat $portfile)
 	do
-		nc -v -n -z -w 1 $i $p >> $ofile 2> /dev/null
+		nc -v -n -z -w 1 $i $p >> $ofile 2> &1
 		echo -n "."
 	done
 	echo
