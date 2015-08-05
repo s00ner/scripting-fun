@@ -13,9 +13,11 @@ do
 	echo -n "Scanning $i"
 	for p in $(cat $portfile)
 	do
-		nc -v -n -z -w 1 $i $p 2>>$ofile
+		nc -v -n -z -w 1 $i $p 2>>$ofile &
+		sleep .3
 		echo -n "."
 	done
+	sleep 2
 	echo
 done
 grep "open" $ofile > "$ofile.tmp"
